@@ -1,8 +1,10 @@
 package day14
 
+import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
+@Ignored
 class Day14Test : FreeSpec({
 
     val sampleInput: List<String> = listOf(
