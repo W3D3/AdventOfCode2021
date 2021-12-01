@@ -13,13 +13,13 @@ fun main(args: Array<String>) {
 
 fun solveDay01Part1(input: List<String>): Int {
     return input.map(String::toInt)
-            .zipWithNext { a, b -> b > a }
-            .count { b -> b }
+        .zipWithNext { a, b -> b > a }
+        .count { it }
 }
 
 fun solveDay01Part2(input: List<String>): Int {
     return input.map(String::toInt)
-            .windowed(3, transform = List<Int>::sum)
-            .zipWithNext { a, b -> b > a }
-            .count { b -> b }
+        .windowed(3) { it.sum() }
+        .zipWithNext { a, b -> b > a }
+        .count { it }
 }
