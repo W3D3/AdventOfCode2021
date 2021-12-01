@@ -11,11 +11,15 @@ fun main(args: Array<String>) {
     solve(day, input, ::solveDay01Part1, ::solveDay01Part2)
 }
 
-
 fun solveDay01Part1(input: List<String>): Int {
-    TODO()
+    return input.map(String::toInt)
+            .zipWithNext { a, b -> b > a }
+            .count { b -> b }
 }
 
 fun solveDay01Part2(input: List<String>): Int {
-    TODO()
+    return input.map(String::toInt)
+            .windowed(3, transform = List<Int>::sum)
+            .zipWithNext { a, b -> b > a }
+            .count { b -> b }
 }
