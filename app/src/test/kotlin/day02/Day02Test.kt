@@ -4,15 +4,20 @@ import io.kotest.core.annotation.Ignored
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
-@Ignored
 class Day02Test : FreeSpec({
 
     val sampleInput: List<String> = listOf(
+            "forward 5",
+            "down 5",
+            "forward 8",
+            "up 3",
+            "down 8",
+            "forward 2",
     )
 
-    val sampleSolutionPart1: Int = -1
+    val sampleSolutionPart1 = 150
 
-    val sampleSolutionPart2: Int = -1
+    val sampleSolutionPart2 = 900
 
     "Solving day 2" - {
         "part 1 for the sample input should return the correct output" {

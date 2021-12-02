@@ -4,7 +4,7 @@ package common
 
 import kotlin.system.exitProcess
 
-fun main(args: Array<String>) {
+fun main() {
 
     val day: Int = try { System.getProperty("day").toInt() } catch (_: Exception) {
         println("Please specify which day should be executed by adding '-Dday=1' to your run command.")
