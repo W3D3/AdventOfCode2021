@@ -18,8 +18,8 @@ enum class Command {
 }
 
 fun parseCommand(cmd: String): Pair<Command, Int> {
-    val split = cmd.split(" ")
-    return Pair(Command.valueOf(split[0].uppercase()), split[1].toInt())
+    return cmd.split(" ")
+            .let { Command.valueOf(it[0].uppercase()) to it[1].toInt() }
 }
 
 fun solveDay02Part1(input: List<String>): Int {
