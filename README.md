@@ -8,6 +8,8 @@ Solutions for the [AoC 2021](https://adventofcode.com/2021) puzzles, written in 
 
 ## Solutions
 
-| Day | Title                                                                    | Solution                                                  |
-|-----|--------------------------------------------------------------------------|-----------------------------------------------------------|
-| 1   | 📡 [Sonar Sweep](https://adventofcode.com/2021/day/1)                    | **[Day01.kt](app/src/main/kotlin/day01/Day01.kt)** ⭐⭐   |
+| Day | Title                                                            | Solution                                               |
+|-----|------------------------------------------------------------------|--------------------------------------------------------|
+| 1   | 📡 [Sonar Sweep](https://adventofcode.com/2021/day/1)            | **[Day01.kt](app/src/main/kotlin/day01/Day01.kt)** ⭐⭐  |
+| 2   | 🤿 [Dive!](https://adventofcode.com/2021/day/2)                  | **[Day02.kt](app/src/main/kotlin/day02/Day02.kt)** ⭐⭐  |
+| 3   | 🩺 [Binary Diagnostic](https://adventofcode.com/2021/day/3)      | **[Day03.kt](app/src/main/kotlin/day03/Day03.kt)** ⭐⭐  |
