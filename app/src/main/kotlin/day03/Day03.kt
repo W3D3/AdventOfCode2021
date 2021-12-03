@@ -23,23 +23,18 @@ fun solveDay03Part1(input: List<String>): Int {
         }
     }
 
-    val gammaBits = arrayOfNulls<Int>(countPerPosition.size)
-    val epsilonBits = arrayOfNulls<Int>(countPerPosition.size)
-    for ((i, cnt) in countPerPosition) {
-        if (cnt > total / 2) {
-            gammaBits[i] = 1
-            epsilonBits[i] = 0
-        } else {
-            gammaBits[i] = 0
-            epsilonBits[i] = 1
-        }
-    }
+    val gammaBits = countPerPosition
+        .map { entry -> entry.value > total / 2 }
+        .map { b -> if (b) 1 else 0 }
+        .toList()
+    val epsilonBits = gammaBits
+        .map { bit -> if (bit == 1) 0 else 1 }
+
     val gammaRate = gammaBits.joinToString("").toInt(2)
     val epsilonRate = epsilonBits.joinToString("").toInt(2)
 
     return gammaRate * epsilonRate
 }
-
 
 /**
  * Calculates the rating
