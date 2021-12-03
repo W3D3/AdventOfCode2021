@@ -13,13 +13,13 @@ fun main(args: Array<String>) {
 }
 
 fun solveDay03Part1(input: List<String>): Int {
-    val total = input.size;
+    val total = input.size
     val countPerPosition = HashMap<Int, Int>()
     for (bitsString in input) {
         for ((index, bit) in bitsString.withIndex()) {
             if (bit.digitToInt() == 1)
                 countPerPosition.computeIfPresent(index) { _, v -> v + 1 }
-            countPerPosition.putIfAbsent(index, 1);
+            countPerPosition.putIfAbsent(index, 1)
         }
     }
 
@@ -27,11 +27,11 @@ fun solveDay03Part1(input: List<String>): Int {
     val epsilonBits = arrayOfNulls<Int>(countPerPosition.size)
     for ((i, cnt) in countPerPosition) {
         if (cnt > total / 2) {
-            gammaBits[i] = 1;
-            epsilonBits[i] = 0;
+            gammaBits[i] = 1
+            epsilonBits[i] = 0
         } else {
-            gammaBits[i] = 0;
-            epsilonBits[i] = 1;
+            gammaBits[i] = 0
+            epsilonBits[i] = 1
         }
     }
     val gammaRate = gammaBits.joinToString("").toInt(2)
@@ -40,12 +40,39 @@ fun solveDay03Part1(input: List<String>): Int {
     return gammaRate * epsilonRate
 }
 
-fun determineMajority(bitStrings: Collection<String>, index: Int, majorityOf: Int, tieBreak: Boolean): Boolean {
+
+/**
+ * Calculates the rating
+ *
+ * @param input the list of strings containing the binary numbers of the same length
+ * @param bitToAppend bit to append if the majority of an index contains ones (true = 1, false = 0)
+ */
+fun calculateRating(input: List<String>, bitToAppend: Boolean): Int {
+    var bitStrings = input
+    var prefix = ""
+    var index = 0
+
+    val bitCharToAppendOnMajority = if (bitToAppend) '1' else '0'
+    val bitCharToAppendOnMinority = if (bitToAppend) '0' else '1'
+
+    while (bitStrings.size > 1) {
+        val majorityOne = majorityOneOnIndex(bitStrings, index)
+        prefix += if (majorityOne) bitCharToAppendOnMajority else bitCharToAppendOnMinority
+
+        bitStrings = filterForPrefix(bitStrings, prefix)
+        index++
+    }
+    assert(bitStrings.size == 1)
+
+    return bitStrings[0].toInt(2)
+}
+
+fun majorityOneOnIndex(bitStrings: Collection<String>, index: Int): Boolean {
     var cnt = 0
     val threshold: Int = ceil(bitStrings.size / 2.0).toInt()
 
     for (bitString in bitStrings) {
-        if (bitString[index].digitToInt() == majorityOf) {
+        if (bitString[index].digitToInt() == 1) {
             cnt++
         }
         if (cnt > threshold) {
@@ -53,7 +80,7 @@ fun determineMajority(bitStrings: Collection<String>, index: Int, majorityOf: In
         }
     }
     if (cnt == threshold) {
-        return tieBreak
+        return true
     }
     return false
 }
@@ -63,33 +90,8 @@ fun filterForPrefix(bitStrings: Collection<String>, prefix: String): List<String
 }
 
 fun solveDay03Part2(input: List<String>): Int {
-    var bitStrings = input;
-    var prefix = "";
-    var index = 0
-    while (bitStrings.size > 1) {
-        val majorityOne = determineMajority(bitStrings, index, 1, true)
-        prefix += if (majorityOne) "1" else "0"
+    val o2Rating = calculateRating(input, true)
+    val co2Rating = calculateRating(input, false)
 
-        bitStrings = filterForPrefix(bitStrings, prefix);
-        index++
-    }
-    val o2Rating = bitStrings[0];
-    println(o2Rating.toInt(2));
-
-    index = 0
-    prefix = ""
-    bitStrings = input;
-    while (bitStrings.size > 1) {
-        val majorityOne = determineMajority(bitStrings, index, 1, true)
-        prefix += if (majorityOne) "0" else "1"
-
-        bitStrings = filterForPrefix(bitStrings, prefix);
-        index++
-    }
-    val co2Rating = bitStrings[0];
-    println(co2Rating.toInt(2));
-
-
-    println(bitStrings);
-    return o2Rating.toInt(2) * co2Rating.toInt(2);
+    return o2Rating * co2Rating
 }
