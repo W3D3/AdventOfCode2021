@@ -17,9 +17,10 @@ fun solveDay03Part1(input: List<String>): Int {
     val countPerPosition = HashMap<Int, Int>()
     for (bitsString in input) {
         for ((index, bit) in bitsString.withIndex()) {
-            if (bit.digitToInt() == 1)
+            if (bit.digitToInt() == 1) {
                 countPerPosition.computeIfPresent(index) { _, v -> v + 1 }
-            countPerPosition.putIfAbsent(index, 1)
+                countPerPosition.putIfAbsent(index, 1)
+            }
         }
     }
 
