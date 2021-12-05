@@ -12,23 +12,29 @@ fun main(args: Array<String>) {
     solve(day, input, ::solveDay05Part1, ::solveDay05Part2)
 }
 
-data class Line(val beginning: Coord, val end: Coord) {
+data class Line(val start: Coord, val end: Coord) {
     fun isNonDiagonal(): Boolean {
-        return (beginning.x == end.x) or (beginning.y == end.y)
+        return (start.x == end.x) or (start.y == end.y)
     }
 
     fun getAffectedCoords(): Collection<Coord> {
         val affectedCoords = ArrayList<Coord>()
 
-        val step_x = if (beginning.x < end.x) 1 else if (beginning.x == end.x) 0 else -1
-        val step_y = if (beginning.y < end.y) 1 else if (beginning.y == end.y) 0 else -1
+        fun calcStepSize(from: Int, to: Int): Int = when {
+            from < to -> 1
+            from == to -> 0
+            else -> -1
+        }
+        val stepX = calcStepSize(start.x, end.x)
+        val stepY = calcStepSize(start.y, end.y)
 
-        val x_diff = beginning.x - end.x
-        val y_diff = beginning.y - end.y
-        // lmao 45 degree hax below
-        val distance: Int = (abs(x_diff) + abs(y_diff)) / if (isNonDiagonal()) 1 else 2
-        for (i in 0..distance) {
-            affectedCoords.add(Coord(beginning.x + step_x * i, beginning.y + step_y * i))
+        val xDiff = abs(start.x - end.x)
+        val yDiff = abs(start.y - end.y)
+
+        // Note, this assumes that all diagonal lines are 45°.
+        val numSteps: Int = (xDiff + yDiff) / if (isNonDiagonal()) 1 else 2
+        for (i in 0..numSteps) {
+            affectedCoords.add(Coord(start.x + stepX * i, start.y + stepY * i))
         }
 
         return affectedCoords
@@ -37,7 +43,7 @@ data class Line(val beginning: Coord, val end: Coord) {
 
 data class Coord(val x: Int, val y: Int)
 
-fun parseLine(line: String): Line {
+private fun parseLine(line: String): Line {
     val regex = """(\d+),(\d+) -> (\d+),(\d+)""".toRegex()
     val matchResult = regex.find(line)
     val (x1, y1, x2, y2) = matchResult!!.destructured
@@ -52,7 +58,7 @@ fun solveDay05Part1(input: List<String>): Int {
             .filter(Line::isNonDiagonal)
             .forEach { line ->
                 line.getAffectedCoords()
-                        .forEach { coord -> coverMap.compute(coord) { _, v -> if (v == null) 1 else v + 1 } }
+                        .forEach { coord -> coverMap.compute(coord) { _, cnt -> if (cnt == null) 1 else cnt + 1 } }
             }
 
     return coverMap.count { entry -> entry.value >= 2 }
@@ -64,7 +70,7 @@ fun solveDay05Part2(input: List<String>): Int {
     input.map { line -> parseLine(line) }
             .forEach { line ->
                 line.getAffectedCoords()
-                        .forEach { coord -> coverMap.compute(coord) { _, v -> if (v == null) 1 else v + 1 } }
+                        .forEach { coord -> coverMap.compute(coord) { _, cnt -> if (cnt == null) 1 else cnt + 1 } }
             }
 
     return coverMap.count { entry -> entry.value >= 2 }
