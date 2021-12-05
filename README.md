@@ -11,6 +11,7 @@ To run any specific day, with your puzzle input, simply run:
 ```shell
 ./gradlew run -Dday={day number} -DsessionCookie={session cookie}
 ```
+where `{day number}` is the day and `{session cookie}` is your AoC session cookie value.
 
 To run all the solutions with the example test data, run:
 ```shell
