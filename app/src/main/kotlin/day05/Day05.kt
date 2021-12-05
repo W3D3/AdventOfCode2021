@@ -4,6 +4,7 @@ import common.InputRepo
 import common.readSessionCookie
 import common.solve
 import kotlin.math.abs
+import kotlin.math.max
 
 fun main(args: Array<String>) {
     val day = 5
@@ -32,7 +33,7 @@ data class Line(val start: Coord, val end: Coord) {
         val yDiff = abs(start.y - end.y)
 
         // Note, this assumes that all diagonal lines are 45°.
-        val numSteps: Int = (xDiff + yDiff) / if (isNonDiagonal()) 1 else 2
+        val numSteps: Int = max(xDiff, yDiff)
         for (i in 0..numSteps) {
             affectedCoords.add(Coord(start.x + stepX * i, start.y + stepY * i))
         }
