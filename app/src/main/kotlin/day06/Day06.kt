@@ -12,19 +12,15 @@ fun main(args: Array<String>) {
 }
 
 fun calculateFish(startingFish: List<Int>, days: Int): Long {
-    val lanternFishes = LongArray(days + 30)
+    val lanternFishes = LongArray(days + 10)
 
     for (startFish in startingFish) {
-        print(startFish)
         lanternFishes[startFish + 1] += 1L
     }
 
     for (i in 1..days) {
-        // new born fishes
         lanternFishes[i + 7] += lanternFishes[i]
-        // same fish again
         lanternFishes[i + 9] += lanternFishes[i]
-        println(lanternFishes.toList())
     }
 
     val relevantFish = lanternFishes.copyOfRange(0, days + 1)
