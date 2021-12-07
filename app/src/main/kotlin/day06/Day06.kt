@@ -18,7 +18,7 @@ fun calculateFish(startingFish: List<Int>, days: Int): Long {
         lanternFishes[startFish + 1] += 1L
     }
 
-    for (i in 1..days) {
+    for (i in 1 until days) {
         lanternFishes[i + 7] += lanternFishes[i]
         lanternFishes[i + 9] += lanternFishes[i]
     }
