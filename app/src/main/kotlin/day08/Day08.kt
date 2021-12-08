@@ -56,10 +56,10 @@ private fun generateNumToPattern(sizeToPattern: Map<Int, List<Set<Char>>>): Hash
     // 5 is the only 5 line digit with a top L shape
     val topL = numToPattern[4]!! subtract rightLine
     numToPattern[5] = sizeToPattern[5]!!.first { chars -> chars.containsAll(topL) }
-    // 2 is the only 5  line digit left
+    // 2 is the only 5 line digit left
     numToPattern[2] = (sizeToPattern[5]!! subtract setOf(numToPattern[5]!!, numToPattern[3]!!)).first()
-    // 9 is the only 6 line digit with a top L shape and the right line
-    numToPattern[9] = sizeToPattern[6]!!.first { chars -> chars.containsAll(topL union rightLine) }
+    // 9 is the only 6 line digit with a 4 shape in it
+    numToPattern[9] = sizeToPattern[6]!!.first { chars -> chars.containsAll(numToPattern[4]!!) }
     // 0 is the only other 6 line digit with a right line (that is not 9)
     numToPattern[0] = sizeToPattern[6]!!.first { chars -> (chars != numToPattern[9]) and chars.containsAll(rightLine) }
     // 6 is the only 6 line digit left
