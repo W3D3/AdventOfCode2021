@@ -24,14 +24,14 @@ private fun getLowPoints(map: List<List<Int>>, print: Boolean = false): ArrayLis
         for (j in map[i].indices) {
             val currentPoint = map[i][j]
             val neighbors = setOf(
-                map.getOrNull(i + 1)?.getOrNull(j),
-                map.getOrNull(i)?.getOrNull(j + 1),
-                map.getOrNull(i - 1)?.getOrNull(j),
-                map.getOrNull(i)?.getOrNull(j - 1),
+                pointAt(map, i + 1, j),
+                pointAt(map, i, j + 1),
+                pointAt(map, i - 1, j),
+                pointAt(map, i, j - 1),
             ).filterNotNull()
 
-            if (neighbors.all { neighbor -> neighbor > currentPoint }) {
-                lowPoints.add(Point(i, j, currentPoint))
+            if (neighbors.all { it.height > currentPoint }) {
+                lowPoints += Point(i, j, currentPoint)
                 if (print) colored { print(currentPoint.toString().red) }
             } else {
                 if (print) print(currentPoint)
@@ -42,14 +42,13 @@ private fun getLowPoints(map: List<List<Int>>, print: Boolean = false): ArrayLis
     return lowPoints
 }
 
-
 fun solveDay09Part1(input: List<String>): Int {
     val heightMap = parseInput(input)
 
     return getLowPoints(heightMap).sumOf { p -> p.height + 1 }
 }
 
-private fun findBasin(map: List<List<Int>>, point: Point, visited: Set<Point>): Set<Point> {
+private fun findBasin(map: List<List<Int>>, point: Point, visited: Set<Point> = mutableSetOf(point)): Set<Point> {
     val i = point.x
     val j = point.y
 
@@ -69,7 +68,7 @@ private fun findBasin(map: List<List<Int>>, point: Point, visited: Set<Point>): 
 
     newVisited = visited union unvisitedNeighbors union setOf(point)
     for (neighbor in unvisitedNeighbors) {
-        newVisited = newVisited.plus(findBasin(map, neighbor, newVisited))
+        newVisited = newVisited + findBasin(map, neighbor, newVisited)
     }
     return newVisited
 }
@@ -84,7 +83,8 @@ fun solveDay09Part2(input: List<String>): Int {
 
     val lowPoints = getLowPoints(heightMap)
 
-    return lowPoints.map { p ->
-        findBasin(heightMap, p, mutableSetOf(p)).size
-    }.sortedDescending().take(3).reduce { acc, i -> acc * i }
+    return lowPoints.map { findBasin(heightMap, it).size }
+        .sortedDescending()
+        .take(3)
+        .reduce { x, y -> x * y }
 }
