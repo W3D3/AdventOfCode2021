@@ -20,10 +20,14 @@ To run all the solutions with the example test data, run:
 
 ## Solutions
 
-| Day | Title                                                         | Solution                                              |
-|-----|---------------------------------------------------------------|-------------------------------------------------------|
-| 1   | 📡 [Sonar Sweep](https://adventofcode.com/2021/day/1)         | **[Day01.kt](app/src/main/kotlin/day01/Day01.kt)** ⭐⭐ |
-| 2   | 🤿 [Dive!](https://adventofcode.com/2021/day/2)               | **[Day02.kt](app/src/main/kotlin/day02/Day02.kt)** ⭐⭐ |
-| 3   | 🩺 [Binary Diagnostic](https://adventofcode.com/2021/day/3)   | **[Day03.kt](app/src/main/kotlin/day03/Day03.kt)** ⭐⭐ |
-| 4   | 🦑 [Giant Squid](https://adventofcode.com/2021/day/4)         | **[Day04.kt](app/src/main/kotlin/day04/Day04.kt)** ⭐⭐ |
-| 5   | ♨ [Hydrothermal Venture](https://adventofcode.com/2021/day/5) | **[Day05.kt](app/src/main/kotlin/day05/Day05.kt)** ⭐⭐ |
+| Day | Title                                                            | Solution                                              |
+|-----|------------------------------------------------------------------|-------------------------------------------------------|
+| 1   | 📡 [Sonar Sweep](https://adventofcode.com/2021/day/1)            | **[Day01.kt](app/src/main/kotlin/day01/Day01.kt)** ⭐⭐ |
+| 2   | 🤿 [Dive!](https://adventofcode.com/2021/day/2)                  | **[Day02.kt](app/src/main/kotlin/day02/Day02.kt)** ⭐⭐ |
+| 3   | 🩺 [Binary Diagnostic](https://adventofcode.com/2021/day/3)      | **[Day03.kt](app/src/main/kotlin/day03/Day03.kt)** ⭐⭐ |
+| 4   | 🦑 [Giant Squid](https://adventofcode.com/2021/day/4)            | **[Day04.kt](app/src/main/kotlin/day04/Day04.kt)** ⭐⭐ |
+| 5   | ♨ [Hydrothermal Venture](https://adventofcode.com/2021/day/5)    | **[Day05.kt](app/src/main/kotlin/day05/Day05.kt)** ⭐⭐ |
+| 7   | 🐟 [Lanternfish](https://adventofcode.com/2021/day/6)             | **[Day06.kt](app/src/main/kotlin/day06/Day06.kt)** ⭐⭐ |
+| 7   | 🐳 [The Treachery of Whales](https://adventofcode.com/2021/day/7) | **[Day07.kt](app/src/main/kotlin/day07/Day07.kt)** ⭐⭐ |
+| 8   | 7️⃣ [Seven Segment Search](https://adventofcode.com/2021/day/8)   | **[Day08.kt](app/src/main/kotlin/day08/Day08.kt)** ⭐⭐ |
+| 9   | 💨 [Smoke Basin](https://adventofcode.com/2021/day/9)             | **[Day09.kt](app/src/main/kotlin/day09/Day09.kt)** ⭐⭐ |
