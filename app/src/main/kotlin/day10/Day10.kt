@@ -5,6 +5,13 @@ import common.readSessionCookie
 import common.solve
 import java.util.*
 
+val openToClosed = mapOf(
+    '(' to ')',
+    '[' to ']',
+    '{' to '}',
+    '<' to '>',
+)
+
 fun main(args: Array<String>) {
     val day = 10
     val input = InputRepo(args.readSessionCookie()).get(day = day)
@@ -13,13 +20,6 @@ fun main(args: Array<String>) {
 }
 
 fun solveDay10Part1(input: List<String>): Int {
-    val openToClosed = mapOf(
-        '(' to ')',
-        '[' to ']',
-        '{' to '}',
-        '<' to '>',
-    )
-
     val pointsLookup = mapOf(
         ')' to 3,
         ']' to 57,
@@ -27,31 +27,24 @@ fun solveDay10Part1(input: List<String>): Int {
         '>' to 25137,
     )
 
-    return input.map { line ->
+    fun lineToScore(line: String): Int {
         val expect = Stack<Char>()
-        var points = 0
         for (c in line.toCharArray()) {
             if (openToClosed[c] != null) {
                 expect.push(openToClosed[c])
             } else if (expect.peek() == c) {
                 expect.pop()
             } else {
-                points = pointsLookup[c]!!
-                break
+                return pointsLookup[c]!!
             }
         }
-        points
-    }.sum()
+        return 0
+    }
+
+    return input.map(::lineToScore).sum()
 }
 
 fun solveDay10Part2(input: List<String>): Long {
-    val openToClosed = mapOf(
-        '(' to ')',
-        '[' to ']',
-        '{' to '}',
-        '<' to '>',
-    )
-
     val scoreLookup = mapOf(
         ')' to 1,
         ']' to 2,
@@ -59,26 +52,28 @@ fun solveDay10Part2(input: List<String>): Long {
         '>' to 4,
     )
 
-    val sortedScores = input.map { line ->
+    fun lineToScore(line: String): Long {
         val expect = Stack<Char>()
         var score: Long = 0
         var valid = true
-        for (c in line.toCharArray()) {
-            if (openToClosed[c] != null) {
-                expect.push(openToClosed[c])
-                print(c)
-            } else if (expect.peek() == c) {
-                expect.pop()
+        for (char in line) {
+            if (openToClosed[char] != null) {
+                expect.push(openToClosed[char])
             } else {
-                valid = false
-                break
+                valid = expect.pop() == char
+                if (!valid) break
             }
         }
         if (expect.isNotEmpty() and valid) {
             repeat(expect.size) { score = score * 5 + scoreLookup[expect.pop()]!! }
         }
-        score
-    }.filter { score -> score > 0 }.sorted()
+        return score
+    }
+
+    val sortedScores = input
+        .map(::lineToScore)
+        .filter { score -> score > 0 }
+        .sorted()
 
     return sortedScores[(sortedScores.size - 1) / 2]
 }
