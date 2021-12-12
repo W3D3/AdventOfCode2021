@@ -4,6 +4,23 @@ import common.InputRepo
 import common.readSessionCookie
 import common.solve
 
+var foundPaths = ArrayList<List<Edge>>()
+
+data class Edge(val source: String, val target: String, val weight: Int = 1) {
+    override fun toString(): String {
+        return "$target"
+    }
+
+    fun invert(): Edge {
+        return Edge(target, source, weight)
+    }
+}
+
+private fun parseLine(line: String): Edge {
+    val split = line.split("-")
+    return Edge(split[0], split[1])
+}
+
 fun main(args: Array<String>) {
     val day = 12
     val input = InputRepo(args.readSessionCookie()).get(day = day)
@@ -13,9 +30,95 @@ fun main(args: Array<String>) {
 
 
 fun solveDay12Part1(input: List<String>): Int {
-    TODO()
+    foundPaths = ArrayList()
+    val normalEdges = input.map(::parseLine)
+    val inverted = normalEdges.map { it.invert() }
+    val edges = normalEdges + inverted;
+
+    var visited = mutableSetOf<String>()
+    val reachable = edges.filter { it.source == "start" }
+
+    findPaths(emptyList(), edges)
+
+    print("solutions")
+    println("start, $foundPaths")
+    println(foundPaths.size)
+
+    return foundPaths.size
+
+}
+
+fun findPaths(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge> {
+    val currentNode: String
+    if (previousPath.isEmpty()) {
+        currentNode = "start"
+    } else {
+        currentNode = previousPath.last().target
+        if (currentNode == "end") {
+            foundPaths.add(previousPath)
+            return previousPath
+        }
+    }
+
+    val notAllowed = previousPath.map { it -> it.source }.filter { it == it.lowercase() }.toSet()
+    val reachable = edges
+        .filter { it.source == currentNode }
+        .filter { !notAllowed.contains(it.target) }
+    for (next in reachable) {
+        println(previousPath + next)
+        findPaths(previousPath + next, edges)
+    }
+    return emptyList();
 }
 
 fun solveDay12Part2(input: List<String>): Int {
-    TODO()
+    foundPaths = ArrayList()
+    val normalEdges = input.map(::parseLine)
+    val inverted = normalEdges.map { it.invert() }
+    val edges = normalEdges + inverted;
+
+    var visited = mutableSetOf<String>()
+    val reachable = edges.filter { it.source == "start" }
+
+    findPathsPart2(emptyList(), edges)
+
+    println("Solutions:")
+    for (foundPath in foundPaths) {
+        println("start, $foundPath")
+    }
+    println(foundPaths.size)
+
+    return foundPaths.size
+
+}
+
+
+fun findPathsPart2(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge> {
+    val currentNode: String
+    if (previousPath.isEmpty()) {
+        currentNode = "start"
+    } else {
+        currentNode = previousPath.last().target
+        if (currentNode == "end") {
+            foundPaths.add(previousPath)
+            return previousPath
+        }
+    }
+
+    val notAllowed: Set<String>
+    val previousSmallCaves = previousPath.map { it.source }.plus(currentNode).filter { it == it.lowercase() }
+    if (previousSmallCaves.size == previousSmallCaves.distinct().size) {
+        // no duplicates, allow all small caves
+        notAllowed = setOf("start")
+    } else {
+        notAllowed = previousPath.map { it.source }.filter { it == it.lowercase() }.toSet()
+    }
+    val reachable = edges
+        .filter { it.source == currentNode }
+        .filter { !notAllowed.contains(it.target) }
+    for (next in reachable) {
+        println(previousPath + next)
+        findPathsPart2(previousPath + next, edges)
+    }
+    return emptyList();
 }
