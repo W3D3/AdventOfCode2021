@@ -6,13 +6,13 @@ import common.solve
 
 var foundPaths = ArrayList<List<Edge>>()
 
-data class Edge(val source: String, val target: String, val weight: Int = 1) {
+data class Edge(val source: String, val target: String) {
     override fun toString(): String {
-        return "$target"
+        return "$source -> $target"
     }
 
     fun invert(): Edge {
-        return Edge(target, source, weight)
+        return Edge(target, source)
     }
 }
 
@@ -33,16 +33,10 @@ fun solveDay12Part1(input: List<String>): Int {
     foundPaths = ArrayList()
     val normalEdges = input.map(::parseLine)
     val inverted = normalEdges.map { it.invert() }
-    val edges = normalEdges + inverted;
-
-    var visited = mutableSetOf<String>()
-    val reachable = edges.filter { it.source == "start" }
+    val edges = normalEdges + inverted
 
     findPaths(emptyList(), edges)
-
-    print("solutions")
     println("start, $foundPaths")
-    println(foundPaths.size)
 
     return foundPaths.size
 
@@ -60,7 +54,7 @@ fun findPaths(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge> {
         }
     }
 
-    val notAllowed = previousPath.map { it -> it.source }.filter { it == it.lowercase() }.toSet()
+    val notAllowed = previousPath.map { it.source }.filter { it == it.lowercase() }.toSet()
     val reachable = edges
         .filter { it.source == currentNode }
         .filter { !notAllowed.contains(it.target) }
@@ -68,30 +62,19 @@ fun findPaths(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge> {
         println(previousPath + next)
         findPaths(previousPath + next, edges)
     }
-    return emptyList();
+    return emptyList()
 }
 
 fun solveDay12Part2(input: List<String>): Int {
     foundPaths = ArrayList()
     val normalEdges = input.map(::parseLine)
     val inverted = normalEdges.map { it.invert() }
-    val edges = normalEdges + inverted;
-
-    var visited = mutableSetOf<String>()
-    val reachable = edges.filter { it.source == "start" }
+    val edges = normalEdges + inverted
 
     findPathsPart2(emptyList(), edges)
 
-    println("Solutions:")
-    for (foundPath in foundPaths) {
-        println("start, $foundPath")
-    }
-    println(foundPaths.size)
-
     return foundPaths.size
-
 }
-
 
 fun findPathsPart2(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge> {
     val currentNode: String
@@ -120,5 +103,5 @@ fun findPathsPart2(previousPath: List<Edge>, edges: Collection<Edge>): List<Edge
         println(previousPath + next)
         findPathsPart2(previousPath + next, edges)
     }
-    return emptyList();
+    return emptyList()
 }
