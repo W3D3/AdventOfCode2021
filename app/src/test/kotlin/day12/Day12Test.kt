@@ -29,7 +29,7 @@ val smallSampleInput: List<String> = """
     kj-dc
     """.trimIndent().split("\n")
 
-    val largeInput: List<String> = """
+val largeInput: List<String> = """
     fs-end
     he-DX
     fs-he
@@ -50,13 +50,13 @@ val smallSampleInput: List<String> = """
     start-RW
     """.trimIndent().split("\n")
 
-    val smallSampleSolutionPart1: Int = 10
-    val mediumSampleSolutionPart1: Int = 19
-    val largeSampleSolutionPart1: Int = 226
+    val smallSampleSolutionPart1 = 10
+    val mediumSampleSolutionPart1 = 19
+    val largeSampleSolutionPart1 = 226
 
-    val smallSampleSolutionPart2: Int = 36
-    val mediumSampleSolutionPart2: Int = 103
-    val largeSampleSolutionPart2: Int = 3509
+    val smallSampleSolutionPart2 = 36
+    val mediumSampleSolutionPart2 = 103
+    val largeSampleSolutionPart2 = 3509
 
     "Solving day 12" - {
         "part 1 for the small sample input should return the correct output" {
